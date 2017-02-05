@@ -264,6 +264,13 @@ public class GetDataFromServer extends HttpServlet {
                         jResultObj.addProperty("Cause", "success");
                         jResultObj.add("data", array);
                         break;
+                    case 32:
+                        String tid_name = request.getParameter("value");
+                        array = lb.getTidMaster(dataConnection, "tid_name", tid_name);
+                        jResultObj.addProperty("result", 1);
+                        jResultObj.addProperty("Cause", "success");
+                        jResultObj.add("data", array);
+                        break;
                 }
             } catch (SQLNonTransientConnectionException ex1) {
                 jResultObj.addProperty("result", -1);
