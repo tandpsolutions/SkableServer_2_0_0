@@ -51,7 +51,7 @@ public class GetCashPaymentHeader extends HttpServlet {
 
         if (dataConnection != null) {
             try {
-                String sql = "select c.AC_CD,c.REF_NO,VDATE,a.FNAME,c1.BAL,c1.REMARK from CPRHD c left join CPRDT c1 on c.REF_NO=c1.REF_NO"
+                String sql = "select c.AC_CD,c.REF_NO,VDATE,a.FNAME,c1.BAL,c1.REMARK,c.branch_cd from CPRHD c left join CPRDT c1 on c.REF_NO=c1.REF_NO"
                         + " left join ACNTMST a on c.AC_CD=a.AC_CD where VDATE>=? and VDATE<=? and CTYPE=? ";
                 if (!branch_cd.equalsIgnoreCase("0")) {
                     sql += " and branch_cd=" + branch_cd;
