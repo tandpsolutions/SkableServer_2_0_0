@@ -42,7 +42,7 @@ public class GetRefralMaster extends HttpServlet {
         final JsonObject jResultObj = new JsonObject();
         if (dataConnection != null) {
             try {
-                String sql = "select REF_CD,REF_NAME,USER_ID from REFMST";
+                String sql = "select REF_CD,REF_NAME,USER_ID from refmst";
                 PreparedStatement pstLocal = dataConnection.prepareStatement(sql);
                 ResultSet rsLocal = pstLocal.executeQuery();
                 JsonArray array = new JsonArray();

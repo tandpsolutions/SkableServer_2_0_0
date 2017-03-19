@@ -41,7 +41,7 @@ public class GetBranchMaster extends HttpServlet {
         Library lb = Library.getInstance();
         if (dataConnection != null) {
             try {
-                String sql = "select branch_cd,branch_name,sh_name,address1,address2,address3,email,phone,credit_limit,cash_ac_cd from branchmst order by branch_cd";
+                String sql = "select branch_cd,branch_name,sh_name,address1,address2,address3,email,phone,credit_limit,cash_ac_cd,authorised from branchmst order by branch_cd";
                 PreparedStatement pstLocal = dataConnection.prepareStatement(sql);
                 ResultSet rsLocal = pstLocal.executeQuery();
                 JsonArray array = new JsonArray();
@@ -57,6 +57,7 @@ public class GetBranchMaster extends HttpServlet {
                     object.addProperty("phone", rsLocal.getString("phone"));
                     object.addProperty("cash_ac_cd", rsLocal.getString("cash_ac_cd"));
                     object.addProperty("credit_limit", rsLocal.getDouble("credit_limit"));
+                    object.addProperty("authorised", rsLocal.getString("authorised"));
                     array.add(object);
                 }
                 lb.closeResultSet(rsLocal);

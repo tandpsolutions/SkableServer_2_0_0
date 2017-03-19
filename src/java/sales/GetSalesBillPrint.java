@@ -46,7 +46,7 @@ public class GetSalesBillPrint extends HttpServlet {
             try {
                 PreparedStatement pstLocal = null;
                 String sql = "SELECT t.tax_cd,v1.tag_no,v.BUY_BACK_AMT,v.INV_NO,a.FNAME,a1.ADD1,p.MOBILE1,a.TIN,v.V_DATE,s.SR_NAME,v1.IMEI_NO,v1.SERAIL_NO,v1.QTY,v1.RATE as RATE,v1.MRP,v1.DISC_RATE,v1.AMT,p1.CASH_AMT,v1.BASIC_AMT as BASIC,v1.TAX_AMT as TAX,v1.ADD_TAX_AMT as ADD_TAX,"
-                        + "p1.CARD_AMT,p1.BANK_AMT,p1.BAJAJ_AMT,v.DET_TOT,v.TAX_AMT,v.ADD_TAX_AMT,v.NET_AMT,v.V_TYPE,p1.CHEQUE_NO,p.EMAIL,t.tax_name,v.HEAD_DISC "
+                        + "p1.CARD_AMT,p1.BANK_AMT,p1.BAJAJ_AMT,v.DET_TOT,v.TAX_AMT,v.ADD_TAX_AMT,v.NET_AMT,v.V_TYPE,p1.CHEQUE_NO,p.EMAIL,t.tax_name,v.HEAD_DISC,v.branch_cd "
                         + " FROM vilshd v LEFT JOIN vilsdt v1 ON v.REF_NO=v1.REF_NO LEFT JOIN seriesmst s ON v1.SR_CD=s.SR_CD "
                         + " left join TAXMST t on v1.tax_cd=t.tax_cd left join modelmst m on s.model_cd=m.model_cd "
                         + " LEFT JOIN acntmst a ON v.AC_CD=a.AC_CD LEFT JOIN adbkmst a1 ON a.AC_CD=a1.AC_CD LEFT JOIN phbkmst p ON p.AC_CD=a.AC_CD "
@@ -63,6 +63,7 @@ public class GetSalesBillPrint extends HttpServlet {
                     JsonObject object = new JsonObject();
                     object.addProperty("INV_NO", viewDataRs.getInt("INV_NO"));
                     object.addProperty("FNAME", viewDataRs.getString("FNAME"));
+                    object.addProperty("BRANCH_CD", viewDataRs.getString("BRANCH_CD"));
                     object.addProperty("ADD1", viewDataRs.getString("ADD1"));
                     object.addProperty("MOBILE1", viewDataRs.getString("MOBILE1"));
                     object.addProperty("EMAIL", viewDataRs.getString("EMAIL"));

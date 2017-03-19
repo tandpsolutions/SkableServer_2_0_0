@@ -35,7 +35,7 @@ public class DBHelper {
     }
 
     private static void setupAdminConnectionPool() {
-        String url = "jdbc:mysql://" + Constant.ip + ":" + 3306 + "/ANB0116?sessionVariables=sql_mode=''";
+        String url = "jdbc:mysql://" + Constant.ip + ":" + 3306 + "/anb0116?sessionVariables=sql_mode=''";
         mysqlDSAdmin = new MysqlDataSource();
         mysqlDSAdmin.setURL(url);
         mysqlDSAdmin.setUser("root");
@@ -43,7 +43,7 @@ public class DBHelper {
     }
 
     private static void setupLoginDBConnectionPool() {
-        String url = "jdbc:mysql://" + Constant.ip + ":" + 3306 + "/ANBLOGINDB?sessionVariables=sql_mode=''";
+        String url = "jdbc:mysql://" + Constant.ip + ":" + 3306 + "/anblogindb?sessionVariables=sql_mode=''";
         mysqlDSLoginDB = new MysqlDataSource();
         mysqlDSLoginDB.setURL(url);
         mysqlDSLoginDB.setUser("root");
@@ -51,7 +51,7 @@ public class DBHelper {
     }
 
     private static void setupMainConnectionPool() {
-        String url = "jdbc:mysql://" + Constant.ip + ":" + 3306 + "/ANBMAIN?sessionVariables=sql_mode=''";
+        String url = "jdbc:mysql://" + Constant.ip + ":" + 3306 + "/anbmain?sessionVariables=sql_mode=''";
         mysqlDSMain = new MysqlDataSource();
         mysqlDSMain.setURL(url);
         mysqlDSMain.setUser("root");
