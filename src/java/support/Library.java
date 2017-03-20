@@ -580,6 +580,7 @@ public class Library {
         } else {
             sql += " and t.is_del=1";
         }
+        sql += " order by t.is_main desc";
         PreparedStatement pstLocal = dataConnection.prepareStatement(sql);
         ResultSet rsLocal = pstLocal.executeQuery();
         JsonArray array = new JsonArray();
@@ -1879,7 +1880,7 @@ public class Library {
             System.out.println("Exception at displayKIVoucher " + ex.getMessage());
         }
     }
-    
+
     public JsonArray getTidMaster(Connection dataConnection, String field, String value) throws SQLException {
         String sql = "select TID_CD,TID_NAME from TIDMST WHERE " + field + " like '%" + value + "%'";
         PreparedStatement pstLocal = dataConnection.prepareStatement(sql);
@@ -1893,6 +1894,5 @@ public class Library {
         }
         return array;
     }
-    
 
 }
