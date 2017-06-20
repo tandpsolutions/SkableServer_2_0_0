@@ -98,7 +98,7 @@ public class CashReciept {
                         sql = "insert into oldb2_4 (doc_ref_no,doc_cd,INV_NO,DOC_DATE,AC_CD,TOT_AMT,UNPAID_AMT,DUE_DATE,CUR_ADJST,SR_NO) values (?,?,?,?,?,?,?,?,?,?)";
                         pstUpdate = con.prepareStatement(sql);
                         pstUpdate.setString(1, rsLocal.getString("REF_NO"));
-                        pstUpdate.setString(2, "CP");
+                        pstUpdate.setString(2, "CR");
                         pstUpdate.setString(3, "0");
                         pstUpdate.setDate(4, date);
                         pstUpdate.setString(5, ac_cd);

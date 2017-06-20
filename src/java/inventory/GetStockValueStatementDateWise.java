@@ -53,7 +53,7 @@ public class GetStockValueStatementDateWise extends HttpServlet {
                 String sql = "select SR_ALIAS,SR_NAME,o.SR_CD,sum(case when TRNS_ID='I' then (PCS) else (0) end) as issue,"
                         + "sum(case when TRNS_ID='R' then (PCS) else (0) end) as receipt from OLDB0_2 o "
                         + " left join SERIESMST s on o.SR_CD=s.SR_CD left join MODELMST m on s.MODEL_CD=m.MODEL_CD"
-                        + " where o.DOC_DATE>='" + from_date + "' and o.DOC_DATE<='" + to_date + "'";
+                        + " where o.DOC_DATE>='" + from_date + "' and o.DOC_DATE<='" + to_date + "' and doc_cd <>'STF'";
 
                 if (!type_cd.equalsIgnoreCase("")) {
                     sql += " and m.type_cd='" + type_cd + "' ";

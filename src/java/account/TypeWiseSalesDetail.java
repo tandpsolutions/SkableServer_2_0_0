@@ -52,7 +52,7 @@ public class TypeWiseSalesDetail extends HttpServlet {
             try {
 
                 PreparedStatement pstLocal = null;
-                String sql = "SELECT v.branch_cd,v.ref_no,a.fname,s.sr_name,v.v_date,t.TYPE_NAME,b.brand_name,"
+                String sql = "SELECT m.model_name,v.branch_cd,v.ref_no,a.fname,s.sr_name,v.v_date,t.TYPE_NAME,b.brand_name,"
                         + " CASE WHEN v1.IMEI_NO ='' THEN v1.SERAIL_NO ELSE v1.IMEI_NO END AS IMEI_NO,(v1.qty) AS pcs,(v1.RATE) AS tot_sales,"
                         + " t1.ac_name AS pur_party,MOBILE1,email  FROM VILSHD v LEFT JOIN vilsdt v1 ON v.REF_NO=v1.REF_NO "
                         + " LEFT JOIN SERIESMST s ON v1.SR_CD=s.SR_CD LEFT JOIN acntmst a ON v.ac_cd=a.ac_cd "
@@ -85,6 +85,7 @@ public class TypeWiseSalesDetail extends HttpServlet {
                 while (viewDataRs.next()) {
                     JsonObject object = new JsonObject();
                     object.addProperty("fname", viewDataRs.getString("fname"));
+                    object.addProperty("model_name", viewDataRs.getString("model_name"));
                     object.addProperty("sr_name", viewDataRs.getString("sr_name"));
                     object.addProperty("v_date", viewDataRs.getString("v_date"));
                     object.addProperty("type_name", viewDataRs.getString("type_name"));
@@ -100,7 +101,7 @@ public class TypeWiseSalesDetail extends HttpServlet {
                     array.add(object);
                 }
 
-                sql = "select  v.branch_cd,v.ref_no,a.fname,s.sr_name,v.v_date,t.TYPE_NAME,b.brand_name"
+                sql = "select   m.model_name,v.branch_cd,v.ref_no,a.fname,s.sr_name,v.v_date,t.TYPE_NAME,b.brand_name"
                         + " ,case when IMEI_NO ='' then SERAIL_NO else IMEI_NO end as IMEI_NO,(v1.qty) as pcs,(v1.RATE) as tot_sales"
                         + " ,MOBILE1,email  from srhd v left join srdt v1 on"
                         + " v.REF_NO=v1.REF_NO "
@@ -132,6 +133,7 @@ public class TypeWiseSalesDetail extends HttpServlet {
                     JsonObject object = new JsonObject();
                     object.addProperty("fname", viewDataRs.getString("fname"));
                     object.addProperty("sr_name", viewDataRs.getString("sr_name"));
+                    object.addProperty("model_name", viewDataRs.getString("model_name"));
                     object.addProperty("brand_name", viewDataRs.getString("brand_name"));
                     object.addProperty("v_date", viewDataRs.getString("v_date"));
                     object.addProperty("type_name", viewDataRs.getString("type_name"));

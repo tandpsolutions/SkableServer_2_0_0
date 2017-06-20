@@ -52,9 +52,10 @@ public class TypeWisePurchaseDetail extends HttpServlet {
             try {
 
                 PreparedStatement pstLocal = null;
-                String sql = "select v.branch_cd,v.ref_no,a.fname,s.sr_name,v.v_date,t.TYPE_NAME,v1.tag_no as IMEI_NO,(v1.qty) as pcs,(v1.RATE) as tot_sales from LBRPHD v left join LBRPdt v1 on v.REF_NO=v1.REF_NO "
+                String sql = "select b.brand_name,m.model_name,v.branch_cd,v.ref_no,a.fname,s.sr_name,v.v_date,t.TYPE_NAME,v1.tag_no as IMEI_NO,(v1.qty) as pcs,(v1.RATE) as tot_sales from LBRPHD v left join LBRPdt v1 on v.REF_NO=v1.REF_NO "
                         + " left join SERIESMST s on v1.SR_CD=s.SR_CD left join acntmst a on v.ac_cd=a.ac_cd "
-                        + " left join MODELMST m on s.MODEL_CD=m.MODEL_CD left join TYPEMST t on m.TYPE_CD=t.TYPE_CD where v.IS_DEL=0 "
+                        + " left join MODELMST m on s.MODEL_CD=m.MODEL_CD left join TYPEMST t on m.TYPE_CD=t.TYPE_CD"
+                        + " left join BRANDMST b on m.brand_cd=b.brand_cd where v.IS_DEL=0 "
                         + " and v.v_date>='" + from_date + "' "
                         + " and v.v_date<='" + to_date + "'";
                 if (!type_cd.equalsIgnoreCase("")) {
@@ -81,6 +82,7 @@ public class TypeWisePurchaseDetail extends HttpServlet {
                 while (viewDataRs.next()) {
                     JsonObject object = new JsonObject();
                     object.addProperty("fname", viewDataRs.getString("fname"));
+                    object.addProperty("model_name", viewDataRs.getString("model_name"));
                     object.addProperty("sr_name", viewDataRs.getString("sr_name"));
                     object.addProperty("v_date", viewDataRs.getString("v_date"));
                     object.addProperty("type_name", viewDataRs.getString("type_name"));
@@ -89,13 +91,15 @@ public class TypeWisePurchaseDetail extends HttpServlet {
                     object.addProperty("IMEI_NO", viewDataRs.getString("IMEI_NO"));
                     object.addProperty("REF_NO", viewDataRs.getString("REF_NO"));
                     object.addProperty("branch_cd", viewDataRs.getString("branch_cd"));
+                    object.addProperty("brand_name", viewDataRs.getString("brand_name"));
                     array.add(object);
                 }
 
-                sql = "select  v.branch_cd,v.ref_no,a.fname,s.sr_name,v.v_date,t.TYPE_NAME,case when IMEI_NO ='' then SERAIL_NO else IMEI_NO end as IMEI_NO,(v1.qty) as pcs,(v1.RATE) as tot_sales from prhd v left join prdt v1 on"
+                sql = "select  b.brand_name,m.model_name,v.branch_cd,v.ref_no,a.fname,s.sr_name,v.v_date,t.TYPE_NAME,case when IMEI_NO ='' then SERAIL_NO else IMEI_NO end as IMEI_NO,(v1.qty) as pcs,(v1.RATE) as tot_sales from prhd v left join prdt v1 on"
                         + " v.REF_NO=v1.REF_NO "
                         + " left join SERIESMST s on v1.SR_CD=s.SR_CD left join acntmst a on v.ac_cd=a.ac_cd "
-                        + " left join MODELMST m on s.MODEL_CD=m.MODEL_CD left join TYPEMST t on m.TYPE_CD=t.TYPE_CD where v.IS_DEL=0 "
+                        + " left join MODELMST m on s.MODEL_CD=m.MODEL_CD left join TYPEMST t on m.TYPE_CD=t.TYPE_CD"
+                        + " left join BRANDMST b on m.brand_cd=b.brand_cd where v.IS_DEL=0 "
                         + " and v.v_date>='" + from_date + "' "
                         + " and v.v_date<='" + to_date + "'";
                 if (!type_cd.equalsIgnoreCase("")) {
@@ -120,6 +124,7 @@ public class TypeWisePurchaseDetail extends HttpServlet {
                 while (viewDataRs.next()) {
                     JsonObject object = new JsonObject();
                     object.addProperty("fname", viewDataRs.getString("fname"));
+                    object.addProperty("model_name", viewDataRs.getString("model_name"));
                     object.addProperty("sr_name", viewDataRs.getString("sr_name"));
                     object.addProperty("v_date", viewDataRs.getString("v_date"));
                     object.addProperty("type_name", viewDataRs.getString("type_name"));
@@ -128,6 +133,7 @@ public class TypeWisePurchaseDetail extends HttpServlet {
                     object.addProperty("IMEI_NO", viewDataRs.getString("IMEI_NO"));
                     object.addProperty("REF_NO", viewDataRs.getString("REF_NO"));
                     object.addProperty("branch_cd", viewDataRs.getString("branch_cd"));
+                    object.addProperty("brand_name", viewDataRs.getString("brand_name"));
                     array.add(object);
                 }
 
