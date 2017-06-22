@@ -25,6 +25,18 @@ public class AccountMasterModel {
     private int OPB_EFF;
     private String ref_by;
     private String ref_cd;
+    
+    private String gst_no;
+
+    public String getGst_no() {
+        return gst_no;
+    }
+
+    public void setGst_no(String gst_no) {
+        this.gst_no = gst_no;
+    }
+
+
 
     public String getRef_cd() {
         return ref_cd;
