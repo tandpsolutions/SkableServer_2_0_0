@@ -732,6 +732,10 @@
         <servlet-name>GetTIDMaster</servlet-name>
         <servlet-class>tid.GetTIDMaster</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetTaxMasterView</servlet-name>
+        <servlet-class>taxmaster.GetTaxMasterView</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ValidateLogin</servlet-name>
         <url-pattern>/ValidateLogin</url-pattern>
@@ -1459,6 +1463,10 @@
     <servlet-mapping>
         <servlet-name>GetTIDMaster</servlet-name>
         <url-pattern>/GetTIDMaster</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetTaxMasterView</servlet-name>
+        <url-pattern>/GetTaxMasterView</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
