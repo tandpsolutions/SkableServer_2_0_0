@@ -56,7 +56,7 @@ public class AddUpdateTaxMaster extends HttpServlet {
                 if (tax_cd.equalsIgnoreCase("")) {
                     String init = "T";
                     tax_cd = lb.generateKey(dataConnection, "TAXMST", "tax_cd", init, 7);
-                    String sql = "insert into taxmst (tax_cd,tax_name,tax_per,add_tax_per,tax_on_sales,tax_ac_cd,add_tax_ac_cd,user_id) values(?,?,?,?,?,?,?,?)";
+                    String sql = "insert into taxmst (tax_cd,tax_name,tax_per,add_tax_per,tax_on_sales,tax_ac_cd,add_tax_ac_cd,add_tax_ac_cd1,user_id) values(?,?,?,?,?,?,?,?,?)";
                     PreparedStatement pstLocal = dataConnection.prepareStatement(sql);
                     pstLocal.setString(1, tax_cd);
                     pstLocal.setString(2, tax_name);
@@ -65,7 +65,8 @@ public class AddUpdateTaxMaster extends HttpServlet {
                     pstLocal.setInt(5, 1);
                     pstLocal.setString(6, saveVoucher(dataConnection, "S" + tax_name));
                     pstLocal.setString(7, saveVoucher(dataConnection, "C" + tax_name));
-                    pstLocal.setString(8, user_id);
+                    pstLocal.setString(8, saveVoucher(dataConnection, "I" + tax_name));
+                    pstLocal.setString(9, user_id);
                     pstLocal.executeUpdate();
                 } else if (!tax_cd.equalsIgnoreCase("")) {
                     String sql = "update taxmst set tax_name=?,tax_per=?,add_tax_per=?,edit_no=edit_no+1,user_id=?,time_stamp=current_timestamp where tax_cd=?";
