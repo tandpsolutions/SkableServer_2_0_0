@@ -43,6 +43,7 @@ public class AppUpdateModelMaster extends HttpServlet {
         final String type_cd = request.getParameter("type_cd");
         final String brand_cd = request.getParameter("brand_cd");
         final String tax_cd = request.getParameter("tax_cd");
+        final String gst_cd = request.getParameter("GST_CD");
         final String user_id = request.getParameter("user_id");
         final JsonObject jResultObj = new JsonObject();
 
@@ -50,7 +51,7 @@ public class AppUpdateModelMaster extends HttpServlet {
             try {
                 if (model_cd.equalsIgnoreCase("")) {
                     model_cd = lb.generateKey(dataConnection, "MODELMST", "MODEL_CD", "M", 7);
-                    String sql = "insert into MODELMST (MODEL_CD,MODEL_NAME,BRAND_CD,user_id,TAX_CD,type_cd) values(?,?,?,?,?,?)";
+                    String sql = "insert into MODELMST (MODEL_CD,MODEL_NAME,BRAND_CD,user_id,TAX_CD,type_cd,gst_cd) values(?,?,?,?,?,?,?)";
                     PreparedStatement pstLocal = dataConnection.prepareStatement(sql);
                     pstLocal.setString(1, model_cd);
                     pstLocal.setString(2, model_name);
@@ -58,16 +59,18 @@ public class AppUpdateModelMaster extends HttpServlet {
                     pstLocal.setString(4, user_id);
                     pstLocal.setString(5, tax_cd);
                     pstLocal.setString(6, type_cd);
+                    pstLocal.setString(6, gst_cd);
                     pstLocal.executeUpdate();
                 } else if (!model_cd.equalsIgnoreCase("")) {
-                    String sql = "update MODELMST set MODEL_NAME=?,BRAND_CD=?,edit_no=edit_no+1,user_id=?,time_stamp=current_timestamp,TAX_CD=?,type_cd=? where MODEL_CD=?";
+                    String sql = "update MODELMST set MODEL_NAME=?,BRAND_CD=?,edit_no=edit_no+1,user_id=?,time_stamp=current_timestamp,TAX_CD=?,type_cd=?,gst_cd=? where MODEL_CD=?";
                     PreparedStatement pstLocal = dataConnection.prepareStatement(sql);
                     pstLocal.setString(1, model_name);
                     pstLocal.setString(2, brand_cd);
                     pstLocal.setString(3, user_id);
                     pstLocal.setString(4, tax_cd);
                     pstLocal.setString(5, type_cd);
-                    pstLocal.setString(6, model_cd);
+                    pstLocal.setString(6, gst_cd);
+                    pstLocal.setString(7, model_cd);
                     pstLocal.executeUpdate();
                 }
                 jResultObj.addProperty("result", 1);
