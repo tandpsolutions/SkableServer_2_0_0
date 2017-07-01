@@ -30,6 +30,15 @@ public class PurchaseControllerHeaderModel {
     private String address;
     private int BRANCH_CD;
     private String DUE_DATE;
+    private int TAX_TYPE;
+
+    public int getTAX_TYPE() {
+        return TAX_TYPE;
+    }
+
+    public void setTAX_TYPE(int TAX_TYPE) {
+        this.TAX_TYPE = TAX_TYPE;
+    }
 
     public String getDUE_DATE() {
         return DUE_DATE;
@@ -182,5 +191,4 @@ public class PurchaseControllerHeaderModel {
     public void setUSER_ID(String USER_ID) {
         this.USER_ID = USER_ID;
     }
-
 }

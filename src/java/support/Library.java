@@ -652,7 +652,7 @@ public class Library {
         String sql = "select l.remark,l.REF_NO,l.INV_NO,l.V_DATE,l.V_TYPE,l.PMT_MODE,l.BILL_DATE,l.BILL_NO,l.AC_CD,a.FNAME,a1.ADD1,p.MOBILE1,l.DET_TOT,"
                 + " a.TIN,l1.TAX_CD,l1.TAX_AMT,l1.ADD_TAX_AMT,t.TAX_NAME,t1.is_del as TAG_DEL,FR_CHG,l1.BASIC_AMT,l.DUE_DATE,l.BRANCH_CD,l1.IS_MAIN,"
                 + " l.ADJST,l.NET_AMT,l.IS_DEL,l.EDIT_NO,l.USER_ID,l.TIME_STAMP,l1.SR_NO,l1.TAG_NO,s.SR_NAME,l1.IMEI_NO,l1.SERAIL_NO,l1.QTY,l1.RATE,"
-                + " l1.AMT,l1.PUR_TAG_NO,l1.sr_cd,l1.disc_rate,l1.mrp,l1.nlc from LBRPHD l left join lbrpdt l1 on l.REF_NO=l1.REF_NO left join SERIESMST s on s.SR_CD=l1.SR_CD "
+                + " l1.AMT,l1.PUR_TAG_NO,l1.sr_cd,l1.disc_rate,l1.mrp,l1.nlc,tax_type from LBRPHD l left join lbrpdt l1 on l.REF_NO=l1.REF_NO left join SERIESMST s on s.SR_CD=l1.SR_CD "
                 + " left join acntmst a on l.ac_cd=a.ac_cd left join adbkmst a1 on a.ac_cd=a1.ac_cd left join phbkmst p on a.ac_cd=p.ac_cd "
                 + " left join taxmst t on l1.tax_cd=t.tax_cd left join tag t1 on l1.PUR_TAG_NO=t1.REF_NO"
                 + " where l.REF_NO='" + ref_no + "'";
@@ -704,6 +704,7 @@ public class Library {
             object.addProperty("NLC", rsLocal.getString("NLC"));
             object.addProperty("MRP", rsLocal.getString("MRP"));
             object.addProperty("IS_MAIN", rsLocal.getInt("IS_MAIN"));
+            object.addProperty("TAX_TYPE", rsLocal.getInt("TAX_TYPE"));
             array.add(object);
         }
         closeResultSet(rsLocal);
@@ -1499,6 +1500,8 @@ public class Library {
                 sql = "select tax_ac_cd from taxmst where tax_cd='" + val + "'";
             } else if (tag.equalsIgnoreCase("TACA")) {
                 sql = "select add_tax_ac_cd from taxmst where tax_cd='" + val + "'";
+            } else if (tag.equalsIgnoreCase("TACA1")) {
+                sql = "select add_tax_ac_cd1 from taxmst where tax_cd='" + val + "'";
             } else if (tag.equalsIgnoreCase("TOS")) {
                 sql = "select tax_on_sales from taxmst where tax_cd='" + val + "'";
             }
@@ -1894,5 +1897,4 @@ public class Library {
         }
         return array;
     }
-
 }

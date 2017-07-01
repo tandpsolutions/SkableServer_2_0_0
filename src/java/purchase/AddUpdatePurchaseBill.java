@@ -37,8 +37,9 @@ public class AddUpdatePurchaseBill extends HttpServlet {
     Library lb = Library.getInstance();
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP
+     * <code>GET</code> and
+     * <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -91,7 +92,7 @@ public class AddUpdatePurchaseBill extends HttpServlet {
                         lb.closeStatement(pstLocal);
                     }
                     sql = "INSERT INTO LBRPHD (INV_NO,V_DATE,V_TYPE,PMT_MODE,BILL_DATE,BILL_NO,AC_CD,DET_TOT,BRANCH_CD,"
-                            + "TAX_AMT,ADD_TAX_AMT,NET_AMT,USER_ID,ADJST,REMARK,fr_chg ,DUE_DATE,REF_NO) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                            + "TAX_AMT,ADD_TAX_AMT,NET_AMT,USER_ID,ADJST,REMARK,fr_chg ,DUE_DATE,tax_type,REF_NO) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 } else {
                     new PurchaseBillUpdate().deleteEntry(dataConnection, header.getRef_no());
                     inv_no = Integer.parseInt(lb.getData(dataConnection, "inv_no", "LBRPHD", "REF_NO", header.getRef_no(), 0));
@@ -109,7 +110,7 @@ public class AddUpdatePurchaseBill extends HttpServlet {
                     }
                     sql = "UPDATE LBRPHD set INV_NO=?,V_DATE=?,V_TYPE=?,PMT_MODE=?,BILL_DATE=?,BILL_NO=?,AC_CD=?"
                             + ",DET_TOT=?,BRANCH_CD=?,TAX_AMT=?,ADD_TAX_AMT=?,NET_AMT=?,USER_ID=?,EDIT_NO=EDIT_NO+1,ADJST=?,"
-                            + "TIME_STAMP=CURRENT_TIMESTAMP,REMARK=?,fr_chg =?,DUE_DATE=?  where ref_no=?";
+                            + "TIME_STAMP=CURRENT_TIMESTAMP,REMARK=?,fr_chg =?,DUE_DATE=?,tax_type=?  where ref_no=?";
                 }
                 PreparedStatement pstLocal = dataConnection.prepareStatement(sql);
                 pstLocal.setInt(1, inv_no);
@@ -129,7 +130,8 @@ public class AddUpdatePurchaseBill extends HttpServlet {
                 pstLocal.setString(15, header.getREMARK());
                 pstLocal.setDouble(16, header.getFRIEGHT_CHARGES());
                 pstLocal.setString(17, header.getDUE_DATE());
-                pstLocal.setString(18, header.getRef_no());
+                pstLocal.setInt(18, header.getTAX_TYPE());
+                pstLocal.setString(19, header.getRef_no());
                 pstLocal.executeUpdate();
                 if (pstLocal != null) {
                     lb.closeStatement(pstLocal);
@@ -281,7 +283,6 @@ public class AddUpdatePurchaseBill extends HttpServlet {
 
                 if (ref_no.equalsIgnoreCase("")) {
                     SwingWorker worker = new SwingWorker() {
-
                         @Override
                         protected Object doInBackground() throws Exception {
 //                            lb.displaySalesVoucherPDF(header.getRef_no(), lb.getData(dataConnection, "email", "phbkmst", "AC_CD", header.getAC_CD(), dataConnection);
@@ -346,8 +347,10 @@ public class AddUpdatePurchaseBill extends HttpServlet {
         }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
-     * Handles the HTTP <code>GET</code> method.
+     * Handles the HTTP
+     * <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -361,7 +364,8 @@ public class AddUpdatePurchaseBill extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
+     * Handles the HTTP
+     * <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -383,5 +387,4 @@ public class AddUpdatePurchaseBill extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
