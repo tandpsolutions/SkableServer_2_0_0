@@ -70,6 +70,9 @@ public class GetSalesBillPrint extends HttpServlet {
                     object.addProperty("TIN", viewDataRs.getString("TIN"));
                     object.addProperty("V_DATE", viewDataRs.getString("V_DATE"));
                     object.addProperty("SR_NAME", viewDataRs.getString("SR_NAME"));
+                    object.addProperty("GST_NO", "");
+                    object.addProperty("HSN_CODE", "");
+                    object.addProperty("TAX_TYPE", "0");
                     object.addProperty("IMEI_NO", viewDataRs.getString("IMEI_NO"));
                     object.addProperty("SERAIL_NO", viewDataRs.getString("SERAIL_NO"));
                     object.addProperty("QTY", viewDataRs.getInt("QTY"));
@@ -110,6 +113,7 @@ public class GetSalesBillPrint extends HttpServlet {
                     object.addProperty("COMP_EMAIL", lb.companySetUp().getEmail());
                     object.addProperty("COMP_MOBILE", lb.companySetUp().getPhone_no());
                     object.addProperty("COMP_MOBILE", lb.companySetUp().getPhone_no());
+                    object.addProperty("COMPANY_GST_NO", "");
                     object.addProperty("TAX_CD", viewDataRs.getString("TAX_CD"));
                     array.add(object);
                 }

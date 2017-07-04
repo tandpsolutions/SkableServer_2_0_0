@@ -885,6 +885,7 @@ public class Library {
             object.addProperty("IS_MAIN", rsLocal.getInt("IS_MAIN"));
             object.addProperty("PMT_DAYS", rsLocal.getString("PMT_DAYS"));
             object.addProperty("ADVANCE_AMT", rsLocal.getString("ADVANCE_AMT"));
+            object.addProperty("TAX_TYPE", "0");
             array.add(object);
         }
         closeResultSet(rsLocal);
