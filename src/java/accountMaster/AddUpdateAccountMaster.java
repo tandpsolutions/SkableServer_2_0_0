@@ -109,7 +109,7 @@ public class AddUpdateAccountMaster extends HttpServlet {
             pstLocal.setString(13, acc.getCARD_NO());
             pstLocal.setDouble(14, acc.getOPB_AMT());
             pstLocal.setInt(15, acc.getOPB_EFF());
-            pstLocal.setString(16, acc.getGst_no());
+            pstLocal.setString(16, acc.getGST_NO());
             pstLocal.execute();
 
             sql = "insert into adbkmst values(?,?,?,?,?,?)";
@@ -148,7 +148,7 @@ public class AddUpdateAccountMaster extends HttpServlet {
             pstLocal.setString(6, acc.getCARD_NO());
             pstLocal.setDouble(7, acc.getOPB_AMT());
             pstLocal.setInt(8, acc.getOPB_EFF());
-            pstLocal.setString(9, acc.getGst_no());
+            pstLocal.setString(9, acc.getGST_NO());
             pstLocal.setString(10, acc.getAC_CD());
             pstLocal.execute();
 

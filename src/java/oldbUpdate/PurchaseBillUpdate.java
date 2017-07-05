@@ -40,6 +40,7 @@ public class PurchaseBillUpdate {
             double net_amt = rsLocal.getDouble("NET_AMT");
             double det_tot = rsLocal.getDouble("DET_TOT");
             int pmt_mode = rsLocal.getInt("pmt_mode");
+            int tax_type = rsLocal.getInt("tax_type");
 
             sql = "select * from LBRPDT where ref_no='" + refNo + "'";
             pstLocal = con.prepareStatement(sql);
@@ -91,59 +92,89 @@ public class PurchaseBillUpdate {
                     }
                 }
 
-                sql = "update oldb2_1 set Dr_" + (date.getMonth() + 1) + "=dr_" + (date.getMonth() + 1) + "+? where ac_CD=?";
-                pstUpdate = con.prepareStatement(sql);
-                pstUpdate.setDouble(1, rsLocal.getDouble("TAX_AMT"));
-                pstUpdate.setString(2, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TAC"));
-                i += pstUpdate.executeUpdate();
-                if (pstUpdate != null) {
-                    lb.closeStatement(pstUpdate);
-                }
+                if (tax_type == 0 || tax_type == 1) {
+                    sql = "update oldb2_1 set Dr_" + (date.getMonth() + 1) + "=dr_" + (date.getMonth() + 1) + "+? where ac_CD=?";
+                    pstUpdate = con.prepareStatement(sql);
+                    pstUpdate.setDouble(1, rsLocal.getDouble("TAX_AMT"));
+                    pstUpdate.setString(2, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TAC"));
+                    i += pstUpdate.executeUpdate();
+                    if (pstUpdate != null) {
+                        lb.closeStatement(pstUpdate);
+                    }
 
-                sql = "insert into oldb2_2 (doc_ref_no,doc_date,doc_cd,ac_cd,"
-                        + "val,crdr,particular,opp_ac_cd,time_stamp,INV_NO) values(?,?,?,?,?,?,?,?,?,?)";
+                    sql = "insert into oldb2_2 (doc_ref_no,doc_date,doc_cd,ac_cd,"
+                            + "val,crdr,particular,opp_ac_cd,time_stamp,INV_NO) values(?,?,?,?,?,?,?,?,?,?)";
 
-                pstUpdate = con.prepareStatement(sql);
-                pstUpdate.setString(1, refNo);
-                pstUpdate.setDate(2, date);
-                pstUpdate.setString(3, "PB");
-                pstUpdate.setString(4, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TAC"));
-                pstUpdate.setDouble(5, rsLocal.getDouble("TAX_AMT"));
-                pstUpdate.setString(6, "0");
-                pstUpdate.setString(7, "");
-                pstUpdate.setString(8, ac_cd);
-                pstUpdate.setTimestamp(9, ts);
-                pstUpdate.setString(10, inv_no);
-                i += pstUpdate.executeUpdate();
-                if (pstUpdate != null) {
-                    lb.closeStatement(pstUpdate);
-                }
+                    pstUpdate = con.prepareStatement(sql);
+                    pstUpdate.setString(1, refNo);
+                    pstUpdate.setDate(2, date);
+                    pstUpdate.setString(3, "PB");
+                    pstUpdate.setString(4, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TAC"));
+                    pstUpdate.setDouble(5, rsLocal.getDouble("TAX_AMT"));
+                    pstUpdate.setString(6, "0");
+                    pstUpdate.setString(7, "");
+                    pstUpdate.setString(8, ac_cd);
+                    pstUpdate.setTimestamp(9, ts);
+                    pstUpdate.setString(10, inv_no);
+                    i += pstUpdate.executeUpdate();
+                    if (pstUpdate != null) {
+                        lb.closeStatement(pstUpdate);
+                    }
 
-                sql = "update oldb2_1 set Dr_" + (date.getMonth() + 1) + "=dr_" + (date.getMonth() + 1) + "+? where ac_CD=?";
-                pstUpdate = con.prepareStatement(sql);
-                pstUpdate.setDouble(1, rsLocal.getDouble("ADD_TAX_AMT"));
-                pstUpdate.setString(2, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TACA"));
-                i += pstUpdate.executeUpdate();
-                if (pstUpdate != null) {
-                    lb.closeStatement(pstUpdate);
-                }
+                    sql = "update oldb2_1 set Dr_" + (date.getMonth() + 1) + "=dr_" + (date.getMonth() + 1) + "+? where ac_CD=?";
+                    pstUpdate = con.prepareStatement(sql);
+                    pstUpdate.setDouble(1, rsLocal.getDouble("ADD_TAX_AMT"));
+                    pstUpdate.setString(2, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TACA"));
+                    i += pstUpdate.executeUpdate();
+                    if (pstUpdate != null) {
+                        lb.closeStatement(pstUpdate);
+                    }
 
-                sql = "insert into oldb2_2 (doc_ref_no,doc_date,doc_cd,ac_cd,"
-                        + "val,crdr,particular,opp_ac_cd,time_stamp,INV_NO) values(?,?,?,?,?,?,?,?,?,?)";
-                pstUpdate = con.prepareStatement(sql);
-                pstUpdate.setString(1, refNo);
-                pstUpdate.setDate(2, date);
-                pstUpdate.setString(3, "PB");
-                pstUpdate.setString(4, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TACA"));
-                pstUpdate.setDouble(5, rsLocal.getDouble("ADD_TAX_AMT"));
-                pstUpdate.setString(6, "0");
-                pstUpdate.setString(7, "");
-                pstUpdate.setString(8, ac_cd);
-                pstUpdate.setTimestamp(9, ts);
-                pstUpdate.setString(10, inv_no);
-                i += pstUpdate.executeUpdate();
-                if (pstUpdate != null) {
-                    lb.closeStatement(pstUpdate);
+                    sql = "insert into oldb2_2 (doc_ref_no,doc_date,doc_cd,ac_cd,"
+                            + "val,crdr,particular,opp_ac_cd,time_stamp,INV_NO) values(?,?,?,?,?,?,?,?,?,?)";
+                    pstUpdate = con.prepareStatement(sql);
+                    pstUpdate.setString(1, refNo);
+                    pstUpdate.setDate(2, date);
+                    pstUpdate.setString(3, "PB");
+                    pstUpdate.setString(4, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TACA"));
+                    pstUpdate.setDouble(5, rsLocal.getDouble("ADD_TAX_AMT"));
+                    pstUpdate.setString(6, "0");
+                    pstUpdate.setString(7, "");
+                    pstUpdate.setString(8, ac_cd);
+                    pstUpdate.setTimestamp(9, ts);
+                    pstUpdate.setString(10, inv_no);
+                    i += pstUpdate.executeUpdate();
+                    if (pstUpdate != null) {
+                        lb.closeStatement(pstUpdate);
+                    }
+                } else {
+                    sql = "update oldb2_1 set Dr_" + (date.getMonth() + 1) + "=dr_" + (date.getMonth() + 1) + "+? where ac_CD=?";
+                    pstUpdate = con.prepareStatement(sql);
+                    pstUpdate.setDouble(1, rsLocal.getDouble("TAX_AMT"));
+                    pstUpdate.setString(2, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TACA1"));
+                    i += pstUpdate.executeUpdate();
+                    if (pstUpdate != null) {
+                        lb.closeStatement(pstUpdate);
+                    }
+
+                    sql = "insert into oldb2_2 (doc_ref_no,doc_date,doc_cd,ac_cd,"
+                            + "val,crdr,particular,opp_ac_cd,time_stamp,INV_NO) values(?,?,?,?,?,?,?,?,?,?)";
+
+                    pstUpdate = con.prepareStatement(sql);
+                    pstUpdate.setString(1, refNo);
+                    pstUpdate.setDate(2, date);
+                    pstUpdate.setString(3, "PB");
+                    pstUpdate.setString(4, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TACA1"));
+                    pstUpdate.setDouble(5, rsLocal.getDouble("TAX_AMT"));
+                    pstUpdate.setString(6, "0");
+                    pstUpdate.setString(7, "");
+                    pstUpdate.setString(8, ac_cd);
+                    pstUpdate.setTimestamp(9, ts);
+                    pstUpdate.setString(10, inv_no);
+                    i += pstUpdate.executeUpdate();
+                    if (pstUpdate != null) {
+                        lb.closeStatement(pstUpdate);
+                    }
                 }
             }
 
@@ -256,7 +287,7 @@ public class PurchaseBillUpdate {
 
                         sql = "update oldb2_4 set UNPAID_AMT=UNPAID_AMT-? where DOC_REF_NO=?";
                         pstUpdate = con.prepareStatement(sql);
-                        pstUpdate.setDouble(1, rsLocal.getDouble("BANK_AMT")*-1);
+                        pstUpdate.setDouble(1, rsLocal.getDouble("BANK_AMT") * -1);
                         pstUpdate.setString(2, refNo);
                         i += pstUpdate.executeUpdate();
 
@@ -294,7 +325,7 @@ public class PurchaseBillUpdate {
 
                         sql = "update oldb2_4 set UNPAID_AMT=UNPAID_AMT-? where DOC_REF_NO=?";
                         pstUpdate = con.prepareStatement(sql);
-                        pstUpdate.setDouble(1, rsLocal.getDouble("CARD_AMT")*-1);
+                        pstUpdate.setDouble(1, rsLocal.getDouble("CARD_AMT") * -1);
                         pstUpdate.setString(2, refNo);
                         i += pstUpdate.executeUpdate();
                         if (pstUpdate != null) {
@@ -330,7 +361,7 @@ public class PurchaseBillUpdate {
 
                         sql = "update oldb2_4 set UNPAID_AMT=UNPAID_AMT-? where DOC_REF_NO=?";
                         pstUpdate = con.prepareStatement(sql);
-                        pstUpdate.setDouble(1, rsLocal.getDouble("BAJAJ_AMT")*-1);
+                        pstUpdate.setDouble(1, rsLocal.getDouble("BAJAJ_AMT") * -1);
                         pstUpdate.setString(2, refNo);
                         i += pstUpdate.executeUpdate();
                         if (pstUpdate != null) {
@@ -382,6 +413,7 @@ public class PurchaseBillUpdate {
             double net_amt = rsLocal.getDouble("NET_AMT");
             double det_tot = rsLocal.getDouble("DET_TOT");
             int pmt_mode = rsLocal.getInt("pmt_mode");
+            int tax_type = rsLocal.getInt("tax_type");
 
             sql = "select * from LBRPDT where ref_no='" + refNo + "'";
             pstLocal = con.prepareStatement(sql);
@@ -405,22 +437,34 @@ public class PurchaseBillUpdate {
                     lb.closeStatement(pstUpdate);
                 }
 
-                sql = "update oldb2_1 set Dr_" + (date.getMonth() + 1) + "=dr_" + (date.getMonth() + 1) + "-? where ac_CD=?";
-                pstUpdate = con.prepareStatement(sql);
-                pstUpdate.setDouble(1, rsLocal.getDouble("TAX_AMT"));
-                pstUpdate.setString(2, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TAC"));
-                i += pstUpdate.executeUpdate();
-                if (pstUpdate != null) {
-                    lb.closeStatement(pstUpdate);
-                }
+                if (tax_type == 0 || tax_type == 1) {
 
-                sql = "update oldb2_1 set Dr_" + (date.getMonth() + 1) + "=dr_" + (date.getMonth() + 1) + "-? where ac_CD=?";
-                pstUpdate = con.prepareStatement(sql);
-                pstUpdate.setDouble(1, rsLocal.getDouble("ADD_TAX_AMT"));
-                pstUpdate.setString(2, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TACA"));
-                i += pstUpdate.executeUpdate();
-                if (pstUpdate != null) {
-                    lb.closeStatement(pstUpdate);
+                    sql = "update oldb2_1 set Dr_" + (date.getMonth() + 1) + "=dr_" + (date.getMonth() + 1) + "-? where ac_CD=?";
+                    pstUpdate = con.prepareStatement(sql);
+                    pstUpdate.setDouble(1, rsLocal.getDouble("TAX_AMT"));
+                    pstUpdate.setString(2, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TAC"));
+                    i += pstUpdate.executeUpdate();
+                    if (pstUpdate != null) {
+                        lb.closeStatement(pstUpdate);
+                    }
+
+                    sql = "update oldb2_1 set Dr_" + (date.getMonth() + 1) + "=dr_" + (date.getMonth() + 1) + "-? where ac_CD=?";
+                    pstUpdate = con.prepareStatement(sql);
+                    pstUpdate.setDouble(1, rsLocal.getDouble("ADD_TAX_AMT"));
+                    pstUpdate.setString(2, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TACA"));
+                    i += pstUpdate.executeUpdate();
+                    if (pstUpdate != null) {
+                        lb.closeStatement(pstUpdate);
+                    }
+                } else {
+                    sql = "update oldb2_1 set Dr_" + (date.getMonth() + 1) + "=dr_" + (date.getMonth() + 1) + "-? where ac_CD=?";
+                    pstUpdate = con.prepareStatement(sql);
+                    pstUpdate.setDouble(1, rsLocal.getDouble("TAX_AMT"));
+                    pstUpdate.setString(2, lb.getTaxCode(con, rsLocal.getString("TAX_CD"), "TACA1"));
+                    i += pstUpdate.executeUpdate();
+                    if (pstUpdate != null) {
+                        lb.closeStatement(pstUpdate);
+                    }
                 }
             }
 
@@ -477,7 +521,7 @@ public class PurchaseBillUpdate {
 
                         sql = "update oldb2_4 set UNPAID_AMT=UNPAID_AMT+? where DOC_REF_NO=?";
                         pstUpdate = con.prepareStatement(sql);
-                        pstUpdate.setDouble(1, rsLocal.getDouble("CASH_AMT")*-1);
+                        pstUpdate.setDouble(1, rsLocal.getDouble("CASH_AMT") * -1);
                         pstUpdate.setString(2, refNo);
                         i += pstUpdate.executeUpdate();
                         if (pstUpdate != null) {
@@ -496,7 +540,7 @@ public class PurchaseBillUpdate {
 
                         sql = "update oldb2_4 set UNPAID_AMT=UNPAID_AMT+? where DOC_REF_NO=?";
                         pstUpdate = con.prepareStatement(sql);
-                        pstUpdate.setDouble(1, rsLocal.getDouble("BANK_AMT")*-1);
+                        pstUpdate.setDouble(1, rsLocal.getDouble("BANK_AMT") * -1);
                         pstUpdate.setString(2, refNo);
                         i += pstUpdate.executeUpdate();
                         if (pstUpdate != null) {
@@ -515,7 +559,7 @@ public class PurchaseBillUpdate {
 
                         sql = "update oldb2_4 set UNPAID_AMT=UNPAID_AMT+? where DOC_REF_NO=?";
                         pstUpdate = con.prepareStatement(sql);
-                        pstUpdate.setDouble(1, rsLocal.getDouble("CARD_AMT")*-1);
+                        pstUpdate.setDouble(1, rsLocal.getDouble("CARD_AMT") * -1);
                         pstUpdate.setString(2, refNo);
                         i += pstUpdate.executeUpdate();
                         if (pstUpdate != null) {
