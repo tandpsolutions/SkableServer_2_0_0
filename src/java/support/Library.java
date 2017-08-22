@@ -277,7 +277,8 @@ public class Library {
             object.addProperty("TAX_CD", rsLocal.getString("TAX_CD"));
             object.addProperty("TAX_NAME", rsLocal.getString("TAX_NAME"));
             object.addProperty("SR_ALIAS", rsLocal.getString("SR_ALIAS"));
-            object.addProperty("STOCK", getBalanceStock(dataConnection, rsLocal.getString("SR_CD")));
+            object.addProperty("HSN_CODE", "");
+            object.addProperty("STOCK", 0.00);
             array.add(object);
         }
         sql = "select SR_CD,SR_NAME,t.tax_cd,t.tax_name,SR_ALIAS from SERIESMST s left join modelmst m on "
@@ -292,7 +293,8 @@ public class Library {
             object.addProperty("TAX_CD", rsLocal.getString("TAX_CD"));
             object.addProperty("TAX_NAME", rsLocal.getString("TAX_NAME"));
             object.addProperty("SR_ALIAS", rsLocal.getString("SR_ALIAS"));
-            object.addProperty("STOCK", getBalanceStock(dataConnection, rsLocal.getString("SR_CD")));
+            object.addProperty("HSN_CODE", "");
+            object.addProperty("STOCK", 0.00);
             array.add(object);
         }
         return array;
@@ -942,7 +944,7 @@ public class Library {
     }
 
     public JsonArray getPurchaseReturnBill(Connection dataConnection, String ref_no) throws SQLException {
-        String sql = "SELECT l.remark,l.REF_NO,l.INV_NO,l.V_DATE,l.PMT_MODE,l.AC_CD,a.FNAME,a1.ADD1,p.MOBILE1,l.DET_TOT, a.TIN,l1.TAX_CD,l1.TAX_AMT,"
+        String sql = "SELECT l.v_type,l.remark,l.REF_NO,l.INV_NO,l.V_DATE,l.PMT_MODE,l.AC_CD,a.FNAME,a1.ADD1,p.MOBILE1,l.DET_TOT, a.TIN,l1.TAX_CD,l1.TAX_AMT,"
                 + " l1.ADD_TAX_AMT,t.TAX_NAME,t1.is_del AS TAG_DEL,l1.BASIC_AMT,l.DUE_DATE,l.BRANCH_CD,l1.IS_MAIN, l.ADJST,l.NET_AMT,l.IS_DEL,l.EDIT_NO,"
                 + " l.USER_ID,l.TIME_STAMP,l1.SR_NO,l1.TAG_NO,s.SR_NAME,l1.IMEI_NO,l1.SERAIL_NO,l1.QTY,l1.RATE, l1.AMT,l1.PUR_TAG_NO,l1.sr_cd,l1.disc_rate,"
                 + " l1.mrp,pmt.BANK_AMT,pmt.CHEQUE_NO,pmt.CHEQUE_DATE,card.FNAME AS CARD_NAME,pmt.CARD_AMT, bajaj.FNAME AS BAJAJ_NAME,pmt.BAJAJ_AMT,pmt.SFID,"
@@ -960,6 +962,7 @@ public class Library {
             object.addProperty("REF_NO", rsLocal.getString("REF_NO"));
             object.addProperty("INV_NO", rsLocal.getInt("INV_NO"));
             object.addProperty("V_DATE", rsLocal.getString("V_DATE"));
+            object.addProperty("V_TYPE", rsLocal.getString("V_TYPE"));
             object.addProperty("DUE_DATE", rsLocal.getString("DUE_DATE"));
             object.addProperty("BRANCH_CD", rsLocal.getInt("BRANCH_CD"));
             object.addProperty("PMT_MODE", rsLocal.getInt("PMT_MODE"));
